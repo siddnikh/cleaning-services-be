@@ -3,3 +3,7 @@
 [34m2024-09-04T10:00:07.262Z DB: Executing (default): SELECT 1+1 AS result[39m
 [34m2024-09-04T10:00:07.517Z DB: Database synced successfully 📚[39m
 [31m2024-09-04T10:00:49.341Z DB: Unable to connect to the database: Tenant or user not found[39m
+[34m2024-09-04T10:28:47.239Z DB: Executing (default): SELECT 1+1 AS result[39m
+[34m2024-09-04T10:28:47.479Z DB: Database connection has been established successfully 💾[39m
+[34m2024-09-04T10:28:47.482Z DB: Executing (default): SELECT 1+1 AS result[39m
+[34m2024-09-04T10:28:47.722Z DB: Database synced successfully 📚[39m

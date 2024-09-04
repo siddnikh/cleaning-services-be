@@ -27,20 +27,27 @@ npm install
 
 2. Add the following environment variables to the `.env` file:
 
-```
-PORT=3000
-DB_NAME=your_database_name
-DB_USER=your_database_user
-DB_PASSWORD=your_database_password
-DB_HOST=localhost
-DB_PORT=5432
-```
+   You can use the `.env.SAMPLE` file as a template. Copy its contents to your `.env` file and replace the placeholder values with your actual configuration:
+
+   ```
+   # Server Configuration
+   PORT=3000
+   NODE_ENV=development
+
+   # Database Configuration
+   DB_NAME=your_database_name
+   DB_USER=your_database_user
+   DB_PASSWORD=your_database_password
+   DB_HOST=localhost
+   DB_PORT=5432
+   ```
 
 Replace the values with your actual database credentials.
 
 ## Database Setup
 
 Ensure your PostgreSQL database is running and accessible with the credentials provided in the `.env` file.
+You can use supabase or any other provider to host the database. The dialect is `postgres`.
 
 ## Running the Server
 
@@ -48,6 +55,10 @@ To start the server, run:
 
 ```bash
 node server.js
+```
+or
+```bash
+npm run start
 ```
 
 The server will start on the port specified in your `.env` file (default is 3000).
@@ -57,6 +68,10 @@ The server will start on the port specified in your `.env` file (default is 3000
 - `server.js`: Main entry point of the application
 - `config/logger.js`: Logger configuration
 - `config/db.js`: Database configuration using Sequelize
+- `models`: Folder containing the Sequelize models
+- `routes`: Folder containing the API routes
+- `controllers`: Folder containing the API controllers
+- `utils`: Folder containing the utility functions (helpers)
 
 ## Logging
 
@@ -64,20 +79,11 @@ This project uses Winston for logging. Logs are output to the console and stored
 
 ## Database
 
-The project uses Sequelize as an ORM. The database connection is established in `server.js`.
+The project uses Sequelize as an ORM. The database connection is established in `server.js` and the configuration is in `config/db.js`.
 
 ## API Endpoints
 
 - `GET /ping`: Health check endpoint
-
-## Dependencies
-
-This project uses several npm packages. You can find the full list in the `package.json` file:
-
-```json:package.json
-startLine: 2
-endLine: 11
-```
 
 ## Troubleshooting
 

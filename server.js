@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const { logger, dbLogger } = require("./config/logger");
 const sequelize = require("./config/db");
+const apiRouter = require("./routes");
 const dotenv = require("dotenv");
 
 // Load environment variables from .env file
@@ -17,6 +18,8 @@ app.get('/ping', (req, res) => {
     logger.info('Ping request received');
     res.send('PONG!');
 });
+
+app.use('/api', apiRouter);
 
 app.listen(PORT, async () => {
     logger.info(`Server is running on port ${PORT} 🚀`);
