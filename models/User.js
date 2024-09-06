@@ -65,6 +65,19 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM,
       values: ['Male', 'Female', 'Other'],
       allowNull: false
+    },
+    userType: {
+      type: DataTypes.ENUM,
+      values: ['User', 'Provider'],
+      allowNull: false
+    },
+    otp: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    otpExpiration: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     // Model options
