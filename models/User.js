@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+const Rating = require('./Rating');
 
 module.exports = (sequelize) => {
   const User = sequelize.define('User', {
@@ -66,11 +68,6 @@ module.exports = (sequelize) => {
       values: ['Male', 'Female', 'Other'],
       allowNull: false
     },
-    userType: {
-      type: DataTypes.ENUM,
-      values: ['User', 'Provider'],
-      allowNull: false
-    },
     otp: {
       type: DataTypes.STRING,
       allowNull: true
@@ -78,6 +75,11 @@ module.exports = (sequelize) => {
     otpExpiration: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    verifiedOTP: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     // Model options
@@ -103,5 +105,81 @@ module.exports = (sequelize) => {
     return bcrypt.compareSync(password, this.password);
   };
 
-  return User;
+  const Profile = sequelize.define('Profile', {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    type: {
+      type: DataTypes.ENUM,
+      values: ['User', 'Provider'],
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      },
+      set() {
+        throw new Error('Type cannot be modified after creation');
+      }
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    interests: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: true
+    },
+    services: {
+      type: DataTypes.ARRAY(DataTypes.ENUM('Car Washing', 'House Cleaning', 'Gardening', 'Pool Cleaning', 'Boat Interior', 'Window Cleaning')),
+      allowNull: true,
+      validate: {
+        isValidForProvider(value) {
+          if (this.type === 'Provider' && (!value || value.length === 0)) {
+            throw new Error('Services are required for Provider profiles');
+          }
+        }
+      }
+    },
+    rating: {
+      type: DataTypes.DECIMAL(2, 1),
+      allowNull: true,
+      defaultValue: 0,
+      validate: {
+        min: 0,
+        max: 5,
+        isValidForProvider(value) {
+          if (this.type === 'Provider' && value === null) {
+            throw new Error('Rating is required for Provider profiles');
+          }
+        }
+      }
+    }
+  }, {
+    timestamps: true,
+    tableName: 'profiles'
+  });
+
+  User.hasOne(Profile);
+  Profile.belongsTo(User);
+
+  Profile.hasMany(Rating, {
+    as: 'userRatings',
+    foreignKey: 'userProfileId',
+    constraints: false,
+    scope: {
+      type: 'User'
+    }
+  });
+
+  Profile.hasMany(Rating, {
+    as: 'providerRatings',
+    foreignKey: 'providerProfileId',
+    constraints: false,
+    scope: {
+      type: 'Provider'
+    }
+  });
+
+  return { User, Profile };
 };
