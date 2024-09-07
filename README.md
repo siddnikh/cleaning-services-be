@@ -39,7 +39,10 @@ npm install
    DB_USER=your_database_user
    DB_PASSWORD=your_database_password
    DB_HOST=localhost
-   DB_PORT=5432
+   DB_PORT=whatever
+
+   GMAIL_USER=your_email
+   GMAIL_PASS=your_password
    ```
 
 Replace the values with your actual database credentials.
@@ -48,6 +51,56 @@ Replace the values with your actual database credentials.
 
 Ensure your PostgreSQL database is running and accessible with the credentials provided in the `.env` file.
 You can use supabase or any other provider to host the database. The dialect is `postgres`.
+
+
+## Twilio Setup for OTP
+
+To enable OTP (One-Time Password) functionality using Twilio, follow these steps:
+
+1. Sign up for a Twilio account at https://www.twilio.com if you haven't already.
+
+2. Once logged in, navigate to the Twilio Console and find your Account SID and Auth Token.
+
+3. Purchase a Twilio phone number that will be used to send SMS messages.
+
+4. Add the following Twilio-specific environment variables to your `.env` file:
+
+   ```
+   # Twilio Configuration
+   TWILIO_ACCOUNT_SID=your_account_sid
+   TWILIO_AUTH_TOKEN=your_auth_token
+   TWILIO_PHONE_NUMBER=your_twilio_phone_number
+   ```
+
+   Replace `your_account_sid`, `your_auth_token`, and `your_twilio_phone_number` with your actual Twilio credentials and phone number.
+
+5. Install the Twilio SDK by running:
+
+   ```bash
+   npm install twilio
+   ```
+
+6. In your project, you can now use the Twilio SDK to send OTP via SMS. Here's a basic example of how to use it:
+
+   ```javascript
+   const twilio = require('twilio');
+
+   const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+   function sendOTP(phoneNumber, otp) {
+     return client.messages.create({
+       body: `Your OTP is: ${otp}`,
+       from: process.env.TWILIO_PHONE_NUMBER,
+       to: phoneNumber
+     });
+   }
+   ```
+
+   This function can be called whenever you need to send an OTP to a user's phone number.
+
+Remember to handle the OTP verification process securely in your application logic.
+
+
 
 ## Running the Server
 
