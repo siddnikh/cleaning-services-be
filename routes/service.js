@@ -7,7 +7,9 @@ const {
   searchServices,
   getServiceById,
   getNearestServices,
-  getHighestRatedServices
+  getHighestRatedServices,
+  addBookmark,
+  removeBookmark
 } = require('../controllers/service');
 const { verifyUser } = require('../utils/jwtUtils');
 
@@ -79,6 +81,26 @@ serviceRouter.get('/highest-rated', verifyUser, async (req, res) => {
     await getHighestRatedServices(req, res);
   } catch (error) {
     logger.error(`Error in getting highest rated services, ${req.user.email}: ${error.message}`);
+    const status = error.statusCode || 500;
+    res.status(status).json({ error: error.message });
+  }
+});
+
+serviceRouter.post('/:id/bookmark', verifyUser, async (req, res) => {
+  try {
+    await addBookmark(req, res);
+  } catch (error) {
+    logger.error(`Error in bookmarking service, ${req.user.email}: ${error.message}`);
+    const status = error.statusCode || 500;
+    res.status(status).json({ error: error.message });
+  }
+});
+
+serviceRouter.delete('/:id/bookmark', verifyUser, async (req, res) => {
+  try {
+    await removeBookmark(req, res);
+  } catch (error) {
+    logger.error(`Error in unbookmarking service, ${req.user.email}: ${error.message}`);
     const status = error.statusCode || 500;
     res.status(status).json({ error: error.message });
   }

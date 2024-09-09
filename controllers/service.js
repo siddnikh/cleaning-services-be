@@ -221,6 +221,34 @@ const searchServices = async (req, res) => {
   }
 };
 
+const addBookmark = async (req, res) => {
+  try {
+    const { serviceId } = req.params;
+    const user = req.user;
+
+    await user.addBookmarkedService(serviceId);
+    res.status(200).json({ message: 'Service bookmarked successfully' });
+  } catch (error) {
+    const err = new Error(error.message);
+    err.statusCode = 400;
+    throw err;
+  }
+};
+
+const removeBookmark = async (req, res) => {
+  try {
+    const { serviceId } = req.params;
+    const user = req.user;
+
+    await user.removeBookmarkedService(serviceId);
+    res.status(200).json({ message: 'Service unbookmarked successfully' });
+  } catch (error) {
+    const err = new Error(error.message);
+    err.statusCode = 400;
+    throw err;
+  }
+};
+
 module.exports = {
   getNearestServices,
   getHighestRatedServices,
@@ -228,5 +256,7 @@ module.exports = {
   createService,
   updateService,
   deleteService,
-  searchServices
+  searchServices,
+  addBookmark,
+  removeBookmark
 };

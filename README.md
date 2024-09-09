@@ -80,23 +80,11 @@ To enable OTP (One-Time Password) functionality using Twilio, follow these steps
    npm install twilio
    ```
 
-6. In your project, you can now use the Twilio SDK to send OTP via SMS. Here's a basic example of how to use it:
+6. For detailed instructions on how to use the Twilio SDK to send OTP via SMS, please refer to the official Twilio documentation:
 
-   ```javascript
-   const twilio = require('twilio');
+   https://www.twilio.com/docs/verify/api
 
-   const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
-   function sendOTP(phoneNumber, otp) {
-     return client.messages.create({
-       body: `Your OTP is: ${otp}`,
-       from: process.env.TWILIO_PHONE_NUMBER,
-       to: phoneNumber
-     });
-   }
-   ```
-
-   This function can be called whenever you need to send an OTP to a user's phone number.
+   The documentation provides comprehensive guides and examples for implementing OTP functionality securely in your application.
 
 Remember to handle the OTP verification process securely in your application logic.
 
@@ -122,6 +110,8 @@ The server will start on the port specified in your `.env` file (default is 3000
 - `config/logger.js`: Logger configuration
 - `config/db.js`: Database configuration using Sequelize
 - `models`: Folder containing the Sequelize models
+- `migrations`: Folder containing the Sequelize migrations
+- `seeders`: Folder containing the Sequelize seeders
 - `routes`: Folder containing the API routes
 - `controllers`: Folder containing the API controllers
 - `utils`: Folder containing the utility functions (helpers)
@@ -143,6 +133,3 @@ The project uses Sequelize as an ORM. The database connection is established in 
 If you encounter any issues with database connection, ensure your PostgreSQL service is running and the credentials in your `.env` file are correct.
 
 For any other issues, please check the logs or open an issue in the project repository.
-```
-
-This README provides a comprehensive guide for setting up and configuring the backend project, including environment variables, database setup, and running the server. It also references the dependencies from the `package.json` file you provided.
