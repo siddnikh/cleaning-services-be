@@ -1,7 +1,9 @@
 const express = require('express');
 const authRouter = require('./auth');
 const userRouter = require('./user');
-const ratingRouter = require('./rating');
+const providerRatingRouter = require('./providerRating');
+const providersRouter = require('./providers');
+const serviceRatingRouter = require('./serviceRating');
 const { logger } = require('../config/logger');
 
 // For every router that we add to apiRouter, we need to set each route such that we catch errors in the route itself.
@@ -17,6 +19,8 @@ apiRouter.use((req, res, next) => {
 
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/user', userRouter);
-apiRouter.use('/rating', ratingRouter);
+apiRouter.use('/provider-ratings', providerRatingRouter);
+apiRouter.use('/providers', providersRouter);
+apiRouter.use('/service-ratings', serviceRatingRouter);
 
 module.exports = apiRouter;
