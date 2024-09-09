@@ -140,6 +140,17 @@ const verifyPin = async (req, res) => {
   }
 };
 
+const getUserBookmarks = async (req, res) => {
+  try {
+    const user = req.user;
+    const bookmarks = await user.getBookmarkedServices();
+    res.status(200).json(bookmarks);
+  } catch (error) {
+    const err = new Error(error.message);
+    err.statusCode = 500;
+    throw err;
+  }
+};
 
 module.exports = {
   getUser,
@@ -147,5 +158,6 @@ module.exports = {
   updateUser,
   deleteUser,
   checkIfUserExists,
-  verifyPin
+  verifyPin,
+  getUserBookmarks
 };

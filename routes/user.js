@@ -1,6 +1,6 @@
 const express = require('express');
 const { logger } = require('../config/logger');
-const { getUser, getUserByEmail, updateUser, deleteUser, verifyPin } = require('../controllers/user');
+const { getUser, getUserByEmail, updateUser, deleteUser, verifyPin, getUserBookmarks } = require('../controllers/user');
 const { verifyUser } = require("../utils/jwtUtils");
 
 const userRouter = express.Router();
@@ -55,4 +55,14 @@ userRouter.post('/verify-pin', verifyUser, async (req, res) => {
     }
 });
 
+userRouter.get('/bookmarks', verifyUser, async (req, res) => {
+    try {
+        await getUserBookmarks(req, res);
+    } catch (error) {
+        logger.error(`Error in /bookmarks: ${error.message}`);
+        const status = error.statusCode || 500;
+        res.status(status).json({ error: error.message });
+    }
+});
+module.exports = userRouter;
 module.exports = userRouter;
