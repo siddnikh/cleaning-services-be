@@ -1,6 +1,7 @@
 var jwt = require("jsonwebtoken");
 const { logger } = require('../config/logger');
 const { checkIfUserExists } = require('../controllers/user');
+const { User, Profile } = require("../models/User");
 
 function getEmailFromJwt(encodedToken) {
 	const decodedToken = jwt.decode(encodedToken, { complete: true });
@@ -47,13 +48,28 @@ async function verifyUser(req, res, next) {
 		return;
 	}
 
-	const userObj = await checkIfUserExists(decodedToken.payload.email);
+	const email = decodedToken.payload.email;
+	const userObj = await checkIfUserExists(email);
+	if (!userObj) {
+		res.status(401).send("User not found");
+		logger.error(`Invalid request at ${req.originalUrl}, user not found`);
+		return;
+	}
+
+	const profileObj = await Profile.findOne({ where: { userId: userObj.id } });
+	if (!profileObj) {
+		res.status(401).send("User profile not found");
+		logger.error(`Profile not found for user: ${userObj.id}`);
+		return;
+	}
 
 	req.user = {
 		email: userObj.email,
-        phoneNumber: userObj.phoneNumber,
-        username: userObj.username,
-        country: userObj.country,
+		phoneNumber: userObj.phoneNumber,
+		username: userObj.username,
+		country: userObj.country,
+		userProfileId: profileObj.id,
+		profile: profileObj,
 		...decodedToken.payload,
 	};
 
