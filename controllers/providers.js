@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const { Profile } = require('../models/User');
-// TODO: Get the user's location from profile object of the user
+
 const getNearestProviders = async (req, res) => {
   try {
     const nearbyProviders = await Profile.findAll({
@@ -19,14 +19,14 @@ const getNearestProviders = async (req, res) => {
           Profile.sequelize.fn(
             'ST_Distance',
             Profile.sequelize.col('location'),
-            req.user.location
+            req.user.profile.location
           ),
           'distance'
         ]
       ],
       order: [
         [
-          Profile.sequelize.fn('ST_Distance', Profile.sequelize.col('location'), req.user.location),
+          Profile.sequelize.fn('ST_Distance', Profile.sequelize.col('location'), req.user.profile.location),
           'ASC'
         ]
       ],
@@ -59,7 +59,7 @@ const getHighestRatedProviders = async (req, res) => {
           Profile.sequelize.fn(
             'ST_Distance',
             Profile.sequelize.col('location'),
-            req.user.location
+            req.user.profile.location
           ),
           'distance'
         ]

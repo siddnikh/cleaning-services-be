@@ -1,7 +1,7 @@
 const { User } = require('../models');
 const { logger } = require('../config/logger');
 
-const getUserProfile = async (req, res) => {
+const getUser = async (req, res) => {
   try {
     const email = req.user.email;
     const user = await User.findOne({
@@ -23,7 +23,7 @@ const getUserProfile = async (req, res) => {
   }
 };
 
-const getUserProfileByEmail = async (req, res) => {
+const getUserByEmail = async (req, res) => {
   try {
     const email = req.params.email;
     const user = await User.findOne({
@@ -41,7 +41,7 @@ const getUserProfileByEmail = async (req, res) => {
   }
 };
 
-const updateUserProfile = async (req, res) => {
+const updateUser = async (req, res) => {
   try {
     const email = req.user.email;
     const updateData = req.body;
@@ -74,15 +74,16 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
-const deleteUserProfile = async (req, res) => {
+const deleteUser = async (req, res) => {
   try {
     const email = req.user.email;
     
-    const deleted = await User.destroy({
-      where: { email: email }
-    });
+    const [updated] = await User.update(
+      { deleted: true },
+      { where: { email: email } }
+    );
     
-    if (deleted) {
+    if (updated) {
       res.status(200).json({ message: 'User profile deleted successfully' });
     } else {
       const err = new Error('User not found');
@@ -141,10 +142,10 @@ const verifyPin = async (req, res) => {
 
 
 module.exports = {
-  getUserProfile,
-  getUserProfileByEmail,
-  updateUserProfile,
-  deleteUserProfile,
+  getUser,
+  getUserByEmail,
+  updateUser,
+  deleteUser,
   checkIfUserExists,
   verifyPin
 };
