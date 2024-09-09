@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Rating = sequelize.define('Rating', {
+  const ProviderRating = sequelize.define('ProviderRating', {
     score: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -30,20 +30,15 @@ module.exports = (sequelize) => {
         key: 'id'
       }
     },
-    likedByUserIds: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      allowNull: false,
-      defaultValue: []
-    }
   }, {
     timestamps: true,
-    tableName: 'ratings',
+    tableName: 'provider_ratings',
     hooks: {
-      afterCreate: async (rating, options) => {
+      afterCreate: async (providerRating, options) => {
         const { Profile } = sequelize.models;
-        const providerProfile = await Profile.findByPk(rating.providerProfileId);
-        const allRatings = await Rating.findAll({
-          where: { providerProfileId: rating.providerProfileId }
+        const providerProfile = await Profile.findByPk(providerRating.providerProfileId);
+        const allRatings = await ProviderRating.findAll({
+          where: { providerProfileId: providerRating.providerProfileId }
         });
         
         const totalScore = allRatings.reduce((sum, r) => sum + r.score, 0);
@@ -51,11 +46,11 @@ module.exports = (sequelize) => {
         
         await providerProfile.update({ rating: averageRating }, options);
       },
-      afterUpdate: async (rating, options) => {
+      afterUpdate: async (providerRating, options) => {
         const { Profile } = sequelize.models;
-        const providerProfile = await Profile.findByPk(rating.providerProfileId);
-        const allRatings = await Rating.findAll({
-          where: { providerProfileId: rating.providerProfileId }
+        const providerProfile = await Profile.findByPk(providerRating.providerProfileId);
+        const allRatings = await ProviderRating.findAll({
+          where: { providerProfileId: providerRating.providerProfileId }
         });
         
         const totalScore = allRatings.reduce((sum, r) => sum + r.score, 0);
@@ -63,11 +58,11 @@ module.exports = (sequelize) => {
         
         await providerProfile.update({ rating: averageRating }, options);
       },
-      afterDestroy: async (rating, options) => {
+      afterDestroy: async (providerRating, options) => {
         const { Profile } = sequelize.models;
-        const providerProfile = await Profile.findByPk(rating.providerProfileId);
-        const allRatings = await Rating.findAll({
-          where: { providerProfileId: rating.providerProfileId }
+        const providerProfile = await Profile.findByPk(providerRating.providerProfileId);
+        const allRatings = await ProviderRating.findAll({
+          where: { providerProfileId: providerRating.providerProfileId }
         });
         
         if (allRatings.length === 0) {
@@ -81,8 +76,8 @@ module.exports = (sequelize) => {
     }
   });
 
-  Rating.associate = (models) => {
-    Rating.belongsTo(models.Profile, {
+  ProviderRating.associate = (models) => {
+    ProviderRating.belongsTo(models.Profile, {
       as: 'userProfile',
       foreignKey: 'userProfileId',
       constraints: false,
@@ -91,7 +86,7 @@ module.exports = (sequelize) => {
       }
     });
 
-    Rating.belongsTo(models.Profile, {
+    ProviderRating.belongsTo(models.Profile, {
       as: 'providerProfile',
       foreignKey: 'providerProfileId',
       constraints: false,
@@ -101,5 +96,5 @@ module.exports = (sequelize) => {
     });
   };
 
-  return Rating;
+  return ProviderRating;
 };
