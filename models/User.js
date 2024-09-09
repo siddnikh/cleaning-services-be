@@ -80,6 +80,11 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false
+    },
+    deleted: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   }, {
     // Model options
@@ -236,6 +241,10 @@ module.exports = (sequelize) => {
       through: 'UserBookmarks',
       as: 'bookmarkedServices',
       foreignKey: 'userId'
+    });
+    User.hasMany(models.Booking, {
+      foreignKey: 'userId',
+      as: 'bookings',
     });
   };
 

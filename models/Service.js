@@ -24,6 +24,10 @@ module.exports = (sequelize) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      type: {
+        type: DataTypes.ENUM('Car Washing', 'House Cleaning', 'Gardening', 'Pool Cleaning', 'Boat Interior', 'Window Cleaning', 'Other'),
+        allowNull: false,
+      },
       tiers: {
         type: DataTypes.JSON,
         allowNull: false,
@@ -54,8 +58,7 @@ module.exports = (sequelize) => {
         type: DataTypes.GEOMETRY("POINT"),
         allowNull: false,
       },
-      // Ask the provider to give an area name that would be recognized by their users
-      areaName: {
+      city: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -124,6 +127,11 @@ module.exports = (sequelize) => {
       through: "UserBookmarks",
       as: "bookmarkedByUsers",
       foreignKey: "serviceId",
+    });
+
+    Service.hasMany(models.Booking, {
+      foreignKey: 'serviceId',
+      as: 'bookings',
     });
   };
 
