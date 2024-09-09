@@ -5,6 +5,7 @@ const providerRatingRouter = require('./providerRating');
 const providersRouter = require('./providers');
 const servicesRouter = require('./services');
 const serviceRatingRouter = require('./serviceRating');
+const bookingRouter = require('./booking');
 const { logger } = require('../config/logger');
 
 // For every router that we add to apiRouter, we need to set each route such that we catch errors in the route itself.
@@ -24,5 +25,6 @@ apiRouter.use('/provider-ratings', providerRatingRouter);
 apiRouter.use('/providers', providersRouter); // querying providers
 apiRouter.use('/services', servicesRouter); // querying services
 apiRouter.use('/service-ratings', serviceRatingRouter);
+apiRouter.use('/bookings', bookingRouter);
 
 module.exports = apiRouter;
