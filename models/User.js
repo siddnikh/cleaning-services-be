@@ -123,8 +123,42 @@ module.exports = (sequelize) => {
       }
     },
     location: {
+      type: DataTypes.GEOMETRY('POINT'),
+      allowNull: false
+    },
+    address: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    country: {
+      type: DataTypes.ENUM(
+        'United States', 'Canada', 'United Kingdom', 'Germany', 'France', 'Italy', 'Spain', 'Japan', 'China', 'India',
+        'Brazil', 'Russia', 'Australia', 'Mexico', 'South Korea', 'Indonesia', 'Turkey', 'Saudi Arabia', 'South Africa',
+        'Argentina', 'Egypt', 'Pakistan', 'Thailand', 'Netherlands', 'Switzerland', 'Sweden', 'Poland', 'Belgium',
+        'Norway', 'Austria', 'United Arab Emirates', 'Israel', 'Ireland', 'Denmark', 'Singapore', 'Malaysia', 'Philippines',
+        'Vietnam', 'New Zealand'
+      ),
+      allowNull: false
+    },
+    postalCode: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isPostalCode: function(value) {
+          if (!/^\d{5}(-\d{4})?$/.test(value)) {
+            throw new Error('Invalid postal code format');
+          }
+        }
+      }
     },
     interests: {
       type: DataTypes.ARRAY(DataTypes.STRING),
@@ -180,6 +214,30 @@ module.exports = (sequelize) => {
       type: 'Provider'
     }
   });
+
+  // User bookmarks
+  /**
+   * User bookmark operations:
+   * 
+   * - Add a service to a user's bookmarks:
+   *   user.addBookmarkedService(service)
+   * 
+   * - Remove a service from a user's bookmarks:
+   *   user.removeBookmarkedService(service)
+   * 
+   * - Get all bookmarked services for a user:
+   *   user.getBookmarkedServices()
+   * 
+   * - Check if a service is bookmarked by a user:
+   *   user.hasBookmarkedService(service)
+   */
+  User.associate = (models) => {
+    User.belongsToMany(models.Service, {
+      through: 'UserBookmarks',
+      as: 'bookmarkedServices',
+      foreignKey: 'userId'
+    });
+  };
 
   return { User, Profile };
 };
