@@ -99,7 +99,8 @@ const deleteUserProfile = async (req, res) => {
 const checkIfUserExists = async (email) => {
   try {
     const user = await User.findOne({ where: { email: email } });
-    return !!user;
+    if (user) return user;
+    else return null;
   } catch (error) {
     logger.error(`Error checking if user exists: ${email}`, error);
   }
