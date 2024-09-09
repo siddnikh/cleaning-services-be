@@ -3,6 +3,7 @@ const authRouter = require('./auth');
 const userRouter = require('./user');
 const providerRatingRouter = require('./providerRating');
 const providersRouter = require('./providers');
+const servicesRouter = require('./services');
 const serviceRatingRouter = require('./serviceRating');
 const { logger } = require('../config/logger');
 
@@ -20,7 +21,8 @@ apiRouter.use((req, res, next) => {
 apiRouter.use('/auth', authRouter);
 apiRouter.use('/user', userRouter);
 apiRouter.use('/provider-ratings', providerRatingRouter);
-apiRouter.use('/providers', providersRouter);
+apiRouter.use('/providers', providersRouter); // querying providers
+apiRouter.use('/services', servicesRouter); // querying services
 apiRouter.use('/service-ratings', serviceRatingRouter);
 
 module.exports = apiRouter;

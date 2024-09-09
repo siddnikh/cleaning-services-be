@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const { Profile } = require('../models/User');
-
+// TODO: Get the user's location from profile object of the user
 const getNearestProviders = async (req, res) => {
   try {
     const nearbyProviders = await Profile.findAll({

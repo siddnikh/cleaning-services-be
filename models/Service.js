@@ -54,6 +54,11 @@ module.exports = (sequelize) => {
         type: DataTypes.GEOMETRY("POINT"),
         allowNull: false,
       },
+      // Ask the provider to give an area name that would be recognized by their users
+      areaName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       rating: {
         type: DataTypes.DECIMAL(2, 1),
         allowNull: false,
