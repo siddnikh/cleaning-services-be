@@ -30,6 +30,34 @@ const createRating = async (req, res) => {
   }
 };
 
+const updateRating = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { score, comment } = req.body;
+    const userProfileId = req.user.profileId;
+
+    const rating = await ProviderRating.findByPk(id);
+    if (!rating) {
+      const err = new Error('Rating not found');
+      err.statusCode = 404;
+      throw err;
+    }
+
+    if (rating.userProfileId !== userProfileId) {
+      const err = new Error('You are not authorized to update this rating');
+      err.statusCode = 403;
+      throw err;
+    }
+
+    await rating.update({ score, comment });
+    res.status(200).json(rating);
+  } catch (error) {
+    const err = new Error('Error updating rating');
+    err.statusCode = 500;
+    throw err;
+  }
+};
+
 const deleteRating = async (req, res) => {
   try {
     const { id } = req.params;
@@ -59,5 +87,6 @@ const deleteRating = async (req, res) => {
 
 module.exports = {
   createRating,
+  updateRating,
   deleteRating,
 };
