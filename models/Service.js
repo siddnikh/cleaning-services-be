@@ -101,6 +101,35 @@ module.exports = (sequelize) => {
           },
         },
       },
+      startTime: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+          is: /^([01]\d|2[0-3]):([0-5]\d)$/  // Validates 24-hour format (HH:MM)
+        }
+      },
+      endTime: {
+        type: DataTypes.TIME,
+        allowNull: false,
+        validate: {
+          is: /^([01]\d|2[0-3]):([0-5]\d)$/  // Validates 24-hour format (HH:MM)
+        }
+      },
+      daysOfOperation: {
+        type: DataTypes.ARRAY(DataTypes.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
+        allowNull: false,
+        validate: {
+          isValidDaysArray(value) {
+            if (!Array.isArray(value) || value.length === 0) {
+              throw new Error("Days of operation must be a non-empty array");
+            }
+            const validDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            if (!value.every(day => validDays.includes(day))) {
+              throw new Error("Invalid day in days of operation");
+            }
+          }
+        }
+      },
     },
     {
       timestamps: true,
