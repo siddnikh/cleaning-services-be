@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const User = require('../models/User');
 const { logger } = require('../config/logger');
 
 const getUser = async (req, res) => {

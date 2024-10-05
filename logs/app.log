@@ -1,3 +1,53 @@
 2024-09-04T10:00:03.585Z [34minfo[39m: Server is running on port 3000 🚀
 2024-09-04T10:00:48.910Z [34minfo[39m: Server is running on port 3000 🚀
 2024-09-04T10:28:43.883Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T11:34:17.593Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T11:35:05.086Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T11:39:03.002Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T11:51:55.266Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:00:04.555Z [34minfo[39m: Incoming API request at /api/users
+2024-10-05T12:00:51.630Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:01:42.527Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:04:55.687Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:05:00.730Z [34minfo[39m: ::1 - - [05/Oct/2024:12:05:00 +0000] "POST /auth/signup HTTP/1.1" 404 151 "-" "curl/7.77.0"
+2024-10-05T12:05:47.078Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:05:47.079Z [31merror[39m: Error in /signup: User.create is not a function
+2024-10-05T12:05:47.082Z [34minfo[39m: ::1 - - [05/Oct/2024:12:05:47 +0000] "POST /api/auth/signup HTTP/1.1" 400 41 "-" "curl/7.77.0"
+2024-10-05T12:08:58.420Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:09:25.395Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:09:25.398Z [31merror[39m: Error in /signup: notNull Violation: User.email cannot be null,
+notNull Violation: User.phoneNumber cannot be null,
+notNull Violation: User.password cannot be null,
+notNull Violation: User.pin cannot be null,
+notNull Violation: User.countryCode cannot be null,
+notNull Violation: User.username cannot be null,
+notNull Violation: User.language cannot be null,
+notNull Violation: User.age cannot be null,
+notNull Violation: User.dob cannot be null,
+notNull Violation: User.country cannot be null,
+notNull Violation: User.gender cannot be null
+2024-10-05T12:09:25.402Z [34minfo[39m: ::1 - - [05/Oct/2024:12:09:25 +0000] "POST /api/auth/signup HTTP/1.1" 400 544 "-" "curl/7.77.0"
+2024-10-05T12:15:31.449Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:15:50.322Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:15:51.389Z [31merror[39m: Error in /signup: jwt is not defined
+2024-10-05T12:15:51.397Z [34minfo[39m: ::1 - - [05/Oct/2024:12:15:51 +0000] "POST /api/auth/signup HTTP/1.1" 400 30 "-" "curl/7.77.0"
+2024-10-05T12:16:46.438Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:17:22.624Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:17:38.379Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:17:57.434Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:17:58.708Z [31merror[39m: Error in /signup: Validation error
+2024-10-05T12:17:58.717Z [34minfo[39m: ::1 - - [05/Oct/2024:12:17:58 +0000] "POST /api/auth/signup HTTP/1.1" 400 28 "-" "curl/7.77.0"
+2024-10-05T12:20:40.908Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:20:49.541Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:20:49.847Z [31merror[39m: Error in /signup: Validation error
+2024-10-05T12:20:49.857Z [34minfo[39m: ::1 - - [05/Oct/2024:12:20:49 +0000] "POST /api/auth/signup HTTP/1.1" 400 28 "-" "curl/7.77.0"
+2024-10-05T12:21:06.977Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:21:14.900Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:21:25.418Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:21:25.810Z [31merror[39m: Error in /signup: Validation error
+2024-10-05T12:21:25.817Z [34minfo[39m: ::1 - - [05/Oct/2024:12:21:25 +0000] "POST /api/auth/signup HTTP/1.1" 400 28 "-" "curl/7.77.0"
+2024-10-05T12:21:53.300Z [34minfo[39m: Incoming API request at /api/auth/signup
+2024-10-05T12:21:54.456Z [34minfo[39m: ::1 - - [05/Oct/2024:12:21:54 +0000] "POST /api/auth/signup HTTP/1.1" 201 65 "-" "curl/7.77.0"
+2024-10-05T12:22:03.872Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:22:07.424Z [34minfo[39m: Server is running on port 3000 🚀
+2024-10-05T12:22:09.654Z [34minfo[39m: Server is running on port 3000 🚀

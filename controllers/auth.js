@@ -1,6 +1,10 @@
+const jwt = require("jsonwebtoken");
 const twilio = require('twilio');
-const { User } = require('../models');
+const UserModel = require('../models/User');
 const { sendOTPEmail } = require('../utils/email');
+const sequelize = require('../config/db');
+
+const User = UserModel(sequelize);
 
 async function signup(req, res) {
   try {

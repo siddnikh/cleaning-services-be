@@ -25,28 +25,6 @@ module.exports = (sequelize) => {
     tableName: 'bookings',
   });
 
-  const CancelledBooking = sequelize.define('CancelledBooking', {
-    bookingId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'bookings',
-        key: 'id'
-      }
-    },
-    reason: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    by: {
-      type: DataTypes.ENUM('user', 'provider'),
-      allowNull: false,
-    },
-  }, {
-    timestamps: true,
-    tableName: 'cancelled_bookings',
-  });
-
   Booking.associate = (models) => {
     Booking.belongsTo(models.User, {
       foreignKey: 'userId',
@@ -64,18 +42,12 @@ module.exports = (sequelize) => {
         type: 'Provider',
       },
     });
-    Booking.hasOne(CancelledBooking, {
+    Booking.hasOne(models.CancelledBooking, {
       foreignKey: 'bookingId',
       as: 'cancellation',
+      onDelete: 'SET NULL',
     });
   };
 
-  CancelledBooking.associate = (models) => {
-    CancelledBooking.belongsTo(Booking, {
-      foreignKey: 'bookingId',
-      as: 'booking',
-    });
-  };
-
-  return { Booking, CancelledBooking };
+  return Booking;
 };

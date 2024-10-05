@@ -1,4 +1,4 @@
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { logger } = require('../config/logger');
 const { checkIfUserExists } = require('../controllers/user');
 const { User, Profile } = require("../models/User");

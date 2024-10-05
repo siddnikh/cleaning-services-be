@@ -1,7 +1,7 @@
-const winston = require('winston');
+const winston = require("winston");
 
 const logger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.colorize(),
@@ -11,23 +11,28 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/app.log' })
-  ]
+    new winston.transports.File({ filename: "logs/app.log" }),
+  ],
 });
 
+// Create a stream for Morgan
+logger.stream = {
+  write: (message) => logger.info(message.trim()), // Use logger.info to write messages
+};
+
 const dbLogger = winston.createLogger({
-  level: 'info',
+  level: "info",
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.printf(({ timestamp, message }) => {
       return `${timestamp} DB: ${message}`;
     }),
-    winston.format.colorize({ all: true, colors: { info: 'blue' } })
+    winston.format.colorize({ all: true, colors: { info: "blue" } })
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/db.log' })
-  ]
+    new winston.transports.File({ filename: "logs/db.log" }),
+  ],
 });
 
 module.exports = { logger, dbLogger };

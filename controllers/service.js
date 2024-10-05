@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Service } = require('../models/Service');
+const Service = require('../models/Service');
 
 const getNearestServices = async (req, res) => {
   try {

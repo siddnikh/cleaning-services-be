@@ -12,6 +12,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(morgan("combined", { stream: logger.stream }));
+app.use(express.json());
 
 // For server check
 app.get('/ping', (req, res) => {
@@ -30,6 +31,11 @@ app.listen(PORT, async () => {
         dbLogger.error('Unable to connect to the database:', error);
     }
 
-    await sequelize.sync();
-    dbLogger.info('Database synced successfully 📚');
+    sequelize.sync({ alter: true })
+    .then(() => {
+        dbLogger.info('Database synced successfully 📚');
+    })
+    .catch(error => {
+        dbLogger.error(`Error while trying to sync database ❗️❗️❗️ ${error}`);
+    });
 });

@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { Profile } = require('../models/User');
+const Profile = require('../models/Profile');
 
 const getNearestProviders = async (req, res) => {
   try {

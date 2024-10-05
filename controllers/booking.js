@@ -1,5 +1,6 @@
-const { Booking, CancelledBooking } = require('../models/Booking');
-const { Service } = require('../models/Service');
+const Booking = require('../models/Booking');
+const Service = require('../models/Service');
+const CancelledBooking = require("../models/CancelledBooking");
 const { Op } = require('sequelize');
 
 async function createBooking(req, res) {
