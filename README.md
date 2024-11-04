@@ -1,7 +1,4 @@
-Here's a README for setting up the configuration for this backend project:
-
-```markdown:README.md
-# Backend Project Setup
+# Cleaning Services Backend
 
 This README provides instructions on how to set up the configuration for this backend project.
 
@@ -124,12 +121,9 @@ This project uses Winston for logging. Logs are output to the console and stored
 
 The project uses Sequelize as an ORM. The database connection is established in `server.js` and the configuration is in `config/db.js`.
 
-## API Endpoints
-
-- `GET /ping`: Health check endpoint
-
 ## Troubleshooting
 
 If you encounter any issues with database connection, ensure your PostgreSQL service is running and the credentials in your `.env` file are correct.
 
-For any other issues, please check the logs or open an issue in the project repository.
+## Note
+Checkout the frontend (and the app in use [https://github.com/siddnikh/cleaning-service-app](here).
